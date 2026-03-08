@@ -1,3 +1,4 @@
 .env
 requirements.txt
 k8s_manual/.vagrant
+k8s_manifests/secrets.yml
