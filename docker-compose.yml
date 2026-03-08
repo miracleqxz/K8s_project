@@ -1,0 +1,22 @@
+services:
+  web1:
+    build: ./web
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    deploy:
+      replicas: 3
+    env_file: .env
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.4
+    env_file: .env
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+  

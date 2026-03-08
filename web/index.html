@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tasks</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>Tasks</h1>
+
+    <form id="task-form" class="task-form">
+      <input type="text" id="title" placeholder="Task name" required maxlength="200">
+      <textarea id="description" placeholder="Description (optional)" maxlength="1000"></textarea>
+      <button type="submit">Add Task</button>
+    </form>
+
+    <div id="tasks"></div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+
+</html>
