@@ -4,6 +4,6 @@ metadata:
   name: backend-config
   namespace: application
 data:
-  DB_HOST: db
+  DB_HOST: mysql
   DB_PORT: "3306"
   DB_NAME: tasks
