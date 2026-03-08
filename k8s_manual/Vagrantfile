@@ -1,0 +1,20 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "generic/ubuntu2204"
+
+  nodes = [
+    { name: "master",   ip: "192.168.56.10", mem: 2048, cpus: 2 },
+    { name: "worker-1", ip: "192.168.56.11", mem: 2048, cpus: 2 },
+    { name: "worker-2", ip: "192.168.56.12", mem: 2048, cpus: 2 }
+  ]
+
+  nodes.each do |node|
+    config.vm.define node[:name] do |n|
+      n.vm.hostname = node[:name]
+      n.vm.network "private_network", ip: node[:ip], libvirt__forward_mode: "nat"
+      n.vm.provider :libvirt do |v|
+        v.memory = node[:mem]
+        v.cpus = node[:cpus]
+      end
+    end
+  end
+end
