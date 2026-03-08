@@ -1,0 +1,4 @@
+---
+# handlers file for common
+- name: Restart containerd
+  service: name=containerd state=restarted

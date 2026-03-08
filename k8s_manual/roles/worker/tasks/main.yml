@@ -1,0 +1,6 @@
+---
+# tasks file for worker
+- name: Join Workers to cluster
+  shell: "{{ hostvars[master_hostname]['join_command'] }}"
+  args:
+    creates: /etc/kubernetes/kubelet.conf

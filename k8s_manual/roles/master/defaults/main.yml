@@ -1,0 +1,13 @@
+---
+# defaults file for master
+master_apiserver_address: "192.168.56.10"
+master_pod_network_cidr: "10.244.0.0/16"
+master_user: vagrant
+
+flannel_manifest_url: "https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml"
+metrics_server_manifest_url: "https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml"
+metrics_server_insecure_tls: true
+metrics_server_ready_retries: 10
+metrics_server_ready_delay: 10
+
+master_remove_taint: true

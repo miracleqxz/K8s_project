@@ -1,0 +1,32 @@
+---
+# defaults file for common
+---
+k8s_version: "1.31"
+k8s_package_version: "1.31.14-1.1"
+
+k8s_kernel_modules:
+  - overlay
+  - br_netfilter
+
+k8s_sysctl_params:
+  - { name: "net.bridge.bridge-nf-call-iptables", value: "1" }
+  - { name: "net.bridge.bridge-nf-call-ip6tables", value: "1" }
+  - { name: "net.ipv4.ip_forward", value: "1" }
+
+k8s_required_packages:
+  - containerd
+  - conntrack
+  - socat
+  - apt-transport-https
+  - curl
+
+k8s_packages:
+  - kubelet
+  - kubeadm
+  - kubectl
+
+containerd_config_path: /etc/containerd/config.toml
+
+k8s_gpg_key_url: "https://pkgs.k8s.io/core:/stable:/v{{ k8s_version }}/deb/Release.key"
+k8s_gpg_keyring: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+k8s_repo: "deb [signed-by={{ k8s_gpg_keyring }}] https://pkgs.k8s.io/core:/stable:/v{{ k8s_version }}/deb/ /"
