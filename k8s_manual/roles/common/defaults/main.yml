@@ -1,6 +1,4 @@
 ---
-# defaults file for common
----
 k8s_version: "1.31"
 k8s_package_version: "1.31.14-1.1"
 
