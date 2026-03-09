@@ -7,7 +7,7 @@ master_user: vagrant
 flannel_manifest_url: "https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml"
 metrics_server_manifest_url: "https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml"
 metrics_server_insecure_tls: true
-metrics_server_ready_retries: 10
+metrics_server_ready_retries: 20
 metrics_server_ready_delay: 10
 
 master_remove_taint: true
