@@ -36,3 +36,9 @@ grafana:
   service:
     type: NodePort
     nodePort: 30000
+  initChownData:
+    enabled: false
+  securityContext:
+    runAsUser: 472
+    runAsGroup: 472
+    fsGroup: 472
