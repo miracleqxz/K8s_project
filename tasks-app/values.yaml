@@ -1,0 +1,26 @@
+namespace: application
+
+backend:
+  image: ghcr.io/miracleqxz/k8s_project/backend
+  tag: v1
+  replicas: 2
+  port: 8000
+
+frontend:
+  image: ghcr.io/miracleqxz/k8s_project/web
+  tag: v1
+  replicas: 1
+  port: 80
+  nodePort: 30856
+
+mysql:
+  image: mysql
+  tag: "8.4"
+  replicas: 1
+  port: 3306
+  storageSize: 1Gi
+
+config:
+  dbHost: mysql
+  dbPort: "3306"
+  dbName: tasks

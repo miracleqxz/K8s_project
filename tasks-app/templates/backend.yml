@@ -2,9 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
-  namespace: application
+  namespace: {{ .Values.namespace }}
 spec:
-  replicas: 2
+  replicas: {{ .Values.backend.replicas }}
   selector:
     matchLabels:
       app: backend
@@ -15,26 +15,26 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ghcr.io/miracleqxz/k8s_project/backend:v1
+          image: {{ .Values.backend.image }}:{{ .Values.backend.tag }}
           envFrom:
             - configMapRef:
                 name: backend-config
             - secretRef:
                 name: db-secret
           ports:
-            - containerPort: 8000
+            - containerPort: {{ .Values.backend.port }}
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: backend
-  namespace: application
+  namespace: {{ .Values.namespace }}
 spec:
   selector:
     app: backend
   ports:
     - protocol: TCP
-      port: 8000
-      targetPort: 8000
+      port: {{ .Values.backend.port }}
+      targetPort: {{ .Values.backend.port }}
   type: ClusterIP
