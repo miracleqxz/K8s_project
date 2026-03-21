@@ -106,3 +106,10 @@
   shell: >
     kubectl patch svc argocd-server -n argocd
     -p '{"spec": {"type": "NodePort"}}'
+
+- name: Clone Git repository
+  git:
+    repo: "{{ git_repo_url }}"
+    dest: /home/{{ master_user }}/K8s_project
+    version: main
+  become: false
