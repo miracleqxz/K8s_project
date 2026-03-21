@@ -11,3 +11,8 @@ metrics_server_ready_retries: 20
 metrics_server_ready_delay: 10
 
 master_remove_taint: true
+
+argocd_manifest_url: "https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml"
+local_path_provisioner_url: "https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.35/deploy/local-path-storage.yaml"
+
+install_helm: "https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4"

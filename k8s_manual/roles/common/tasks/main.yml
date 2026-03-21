@@ -77,8 +77,3 @@
     name: "{{ item }}"
     selection: hold
   loop: "{{ k8s_packages }}"
-
-- name: Install Helm
-  shell: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4 | bash
-  args:
-    creates: /usr/local/bin/helm

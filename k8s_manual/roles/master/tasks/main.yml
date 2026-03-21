@@ -74,3 +74,35 @@
 - name: Set join command fact
   set_fact:
     join_command: "{{ join_command_raw.stdout }}"
+
+- name: Install Helm
+  shell: curl {{ install_helm }} | bash
+  args:
+    creates: /usr/local/bin/helm
+
+- name: Install local-path-provisioner
+  become: false
+  shell: kubectl apply -f {{ local_path_provisioner_url }}
+
+- name: Set local-path as default StorageClass
+  become: false
+  shell: >
+    kubectl patch storageclass local-path
+    -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+
+- name: Create argocd namespace
+  become: false
+  shell: kubectl create namespace argocd
+  register: argocd_ns
+  failed_when: argocd_ns.rc != 0 and 'already exists' not in argocd_ns.stderr
+  changed_when: argocd_ns.rc == 0
+
+- name: Install ArgoCD
+  become: false
+  shell: kubectl apply -n argocd -f {{ argocd_manifest_url }}
+
+- name: Patch ArgoCD server to NodePort
+  become: false
+  shell: >
+    kubectl patch svc argocd-server -n argocd
+    -p '{"spec": {"type": "NodePort"}}'
