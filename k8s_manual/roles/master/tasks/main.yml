@@ -16,6 +16,15 @@
   args:
     creates: "/home/{{ master_user }}/.kube/config"
 
+- name: Wait for API server to be ready
+  become: false
+  shell: kubectl cluster-info
+  register: api_check
+  until: api_check.rc == 0
+  retries: 30
+  delay: 10
+  changed_when: false
+
 - name: Install Flannel CNI
   become: false
   shell: "kubectl apply -f {{ flannel_manifest_url }}"
