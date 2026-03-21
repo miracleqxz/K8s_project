@@ -4,6 +4,11 @@
     swapoff -a
     sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 
+- name: Mask swap.target to prevent swap after reboot
+  systemd:
+    name: swap.target
+    masked: yes
+
 - name: Load kernel modules
   modprobe:
     name: "{{ item }}"
