@@ -1,4 +1,4 @@
 ---
 # handlers file for common
-- name: Restart containerd
-  service: name=containerd state=restarted
+- name: Restart Containerd
+  service: name=Containerd state=restarted
