@@ -42,4 +42,5 @@ spec:
     - protocol: TCP
       port: {{ .Values.backend.port }}
       targetPort: {{ .Values.backend.port }}
+      name: http
   type: ClusterIP
