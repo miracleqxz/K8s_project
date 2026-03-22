@@ -1,0 +1,43 @@
+name: CI for Backend
+
+on:
+    push:
+        branches: [main]
+        paths:
+            - "backend/**"
+
+jobs:
+    build-and-push:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            packages: write
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Log in to GHCR
+              uses: docker/login-action@v3
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Build and push backend
+              uses: docker/build-push-action@v5
+              with:
+                  context: ./backend
+                  push: true
+                  tags: ghcr.io/miracleqxz/k8s_project/backend:${{ github.sha }}
+
+            - name: Update Helm values with new image tags
+              run: |
+                  cd tasks-app
+                  sed -i '/^backend:/,/^[a-z]/{s/tag: .*/tag: "${{ github.sha }}"/}' values.yaml
+
+            - name: Commit and push updated values
+              uses: stefanzweifel/git-auto-commit-action@v5
+              with:
+                  commit_message: "CI: update image tags to ${{ github.sha }}"
+                  file_pattern: tasks-app/values.yaml
