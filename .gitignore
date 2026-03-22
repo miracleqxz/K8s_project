@@ -1,5 +1,4 @@
 .env
-requirements.txt
 k8s_manual/.vagrant
 tasks-app/templates/secrets.yml    
 .vscode/
