@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tasks-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/miracleqxz/K8s_project.git
+    targetRevision: main
+    path: tasks-app
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: application
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
