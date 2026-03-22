@@ -16,6 +16,11 @@ spec:
       containers:
         - name: backend
           image: {{ .Values.backend.image }}:{{ .Values.backend.tag }}
+          resources:
+            requests:
+              memory: {{ .Values.backend.resources.requests.memory }}
+            limits:
+              memory: {{ .Values.backend.resources.limits.memory }}
           envFrom:
             - configMapRef:
                 name: backend-config

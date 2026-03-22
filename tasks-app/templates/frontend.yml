@@ -16,6 +16,11 @@ spec:
       containers:
         - name: frontend
           image: {{ .Values.frontend.image }}:{{ .Values.frontend.tag }}
+          resources:
+            requests:
+              memory: {{ .Values.frontend.resources.requests.memory }}
+            limits:
+              memory: {{ .Values.frontend.resources.limits.memory }}
           ports:
             - containerPort: {{ .Values.frontend.port }}
           volumeMounts:
