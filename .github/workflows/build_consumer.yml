@@ -1,0 +1,46 @@
+name: CI for Consumer
+
+on:
+    push:
+        branches: [main]
+        paths:
+            - "consumer/**"
+
+jobs:
+    build-and-push:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            packages: write
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Log in to GHCR
+              uses: docker/login-action@v3
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Build and push consumer
+              uses: docker/build-push-action@v5
+              with:
+                  context: ./consumer
+                  push: true
+                  tags: ghcr.io/miracleqxz/k8s_project/consumer:${{ github.sha }}
+
+            - name: Update Helm values with new image tags
+              run: |
+                  cd tasks-app
+                  sed -i '/^consumer:/,/^[a-z]/{s/tag: .*/tag: "${{ github.sha }}"/}' values.yaml
+
+            - name: Commit and push updated values
+              run: |
+                  git config user.name "github-actions"
+                  git config user.email "github-actions@github.com"
+                  git add tasks-app/values.yaml
+                  git diff --cached --quiet || git commit -m "CI: update ${{ github.workflow }} image to ${{ github.sha }}"
+                  git pull --rebase origin main
+                  git push
