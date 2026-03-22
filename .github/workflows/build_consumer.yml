@@ -5,6 +5,7 @@ on:
         branches: [main]
         paths:
             - "consumer/**"
+            - ".github/workflows/build_consumer.yml"
 
 jobs:
     build-and-push:

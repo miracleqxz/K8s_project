@@ -1,10 +1,11 @@
 name: CI for Frontend
-#
+
 on:
     push:
         branches: [main]
         paths:
             - "web/**"
+            - ".github/workflows/build_frontend.yml"
 
 jobs:
     build-and-push:
