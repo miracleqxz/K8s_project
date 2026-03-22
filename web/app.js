@@ -1,6 +1,8 @@
 const API = "/api/tasks";
 const tasksEl = document.getElementById("tasks");
 const form = document.getElementById("task-form");
+const searchInput = document.getElementById("search");
+const infoEl = document.getElementById("info");
 
 async function request(url, opts = {}) {
   const res = await fetch(url, {
@@ -13,7 +15,7 @@ async function request(url, opts = {}) {
 }
 
 function formatDate(iso) {
-  return new Date(iso).toLocaleString("ru-RU", {
+  return new Date(iso).toLocaleString("en-US", {
     day: "numeric",
     month: "short",
     hour: "2-digit",
@@ -29,7 +31,7 @@ function escapeHtml(str) {
 
 function renderTasks(tasks) {
   if (!tasks.length) {
-    tasksEl.innerHTML = '<p class="empty">Tasks not found</p>';
+    tasksEl.innerHTML = '<p class="empty">No tasks found</p>';
     return;
   }
   tasksEl.innerHTML = tasks
@@ -52,6 +54,34 @@ async function loadTasks() {
   renderTasks(await request(API));
 }
 
+async function loadInfo() {
+  try {
+    const data = await request("/api/info");
+    infoEl.innerHTML =
+      `<span>Pod: <strong>${escapeHtml(data.hostname)}</strong></span>` +
+      `<span>IP: <strong>${escapeHtml(data.pod_ip)}</strong></span>` +
+      `<span>Kafka: ${data.kafka ? "✓" : "✗"}</span>` +
+      `<span>ES: ${data.elasticsearch ? "✓" : "✗"}</span>`;
+  } catch {
+    infoEl.innerHTML = "<span>Backend unavailable</span>";
+  }
+}
+
+// Search with debounce
+let searchTimer;
+searchInput.addEventListener("input", () => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(async () => {
+    const q = searchInput.value.trim();
+    if (!q) {
+      await loadTasks();
+      return;
+    }
+    const results = await request(`${API}/search?q=${encodeURIComponent(q)}`);
+    renderTasks(results);
+  }, 300);
+});
+
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const title = document.getElementById("title").value.trim();
@@ -62,7 +92,9 @@ form.addEventListener("submit", async (e) => {
     body: JSON.stringify({ title, description }),
   });
   form.reset();
+  searchInput.value = "";
   await loadTasks();
+  await loadInfo();
 });
 
 tasksEl.addEventListener("change", async (e) => {
@@ -80,6 +112,8 @@ tasksEl.addEventListener("click", async (e) => {
   const id = e.target.closest(".task-card").dataset.id;
   await request(`${API}/${id}`, { method: "DELETE" });
   await loadTasks();
+  await loadInfo();
 });
 
 loadTasks();
+loadInfo();
