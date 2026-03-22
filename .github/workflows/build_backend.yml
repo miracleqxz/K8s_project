@@ -37,7 +37,10 @@ jobs:
                   sed -i '/^backend:/,/^[a-z]/{s/tag: .*/tag: "${{ github.sha }}"/}' values.yaml
 
             - name: Commit and push updated values
-              uses: stefanzweifel/git-auto-commit-action@v5
-              with:
-                  commit_message: "CI: update image tags to ${{ github.sha }}"
-                  file_pattern: tasks-app/values.yaml
+              run: |
+                  git config user.name "github-actions"
+                  git config user.email "github-actions@github.com"
+                  git add tasks-app/values.yaml
+                  git diff --cached --quiet || git commit -m "CI: update ${{ github.workflow }} image to ${{ github.sha }}"
+                  git pull --rebase origin main
+                  git push
