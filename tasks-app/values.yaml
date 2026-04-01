@@ -13,7 +13,7 @@ backend:
 
 frontend:
   image: ghcr.io/miracleqxz/k8s_project/web
-  tag: "3e74a4934ba00b00d01fe0cf2423efd0c6bd9d0d"
+  tag: "bf61386ebbd27aef40641dfccc19819382341655"
   replicas: 1
   port: 80
   nodePort: 30856
