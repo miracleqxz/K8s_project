@@ -2,7 +2,7 @@ namespace: application
 
 backend:
   image: ghcr.io/miracleqxz/k8s_project/backend
-  tag: "3e74a4934ba00b00d01fe0cf2423efd0c6bd9d0d"
+  tag: "bf61386ebbd27aef40641dfccc19819382341655"
   replicas: 2
   port: 5000
   resources:
