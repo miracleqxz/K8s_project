@@ -20,6 +20,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
+  storageClassName: ""
   resources:
     requests:
       storage: {{ .Values.mongodb.storageSize }}
