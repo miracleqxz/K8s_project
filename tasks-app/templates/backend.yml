@@ -24,25 +24,5 @@ spec:
           envFrom:
             - configMapRef:
                 name: backend-config
-            - secretRef:
-                name: db-secret
           ports:
             - containerPort: {{ .Values.backend.port }}
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: backend
-  namespace: {{ .Values.namespace }}
-  labels:
-    app: backend
-spec:
-  selector:
-    app: backend
-  ports:
-    - protocol: TCP
-      port: {{ .Values.backend.port }}
-      targetPort: {{ .Values.backend.port }}
-      name: http
-  type: ClusterIP

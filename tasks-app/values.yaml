@@ -3,8 +3,8 @@ namespace: application
 backend:
   image: ghcr.io/miracleqxz/k8s_project/backend
   tag: "3e74a4934ba00b00d01fe0cf2423efd0c6bd9d0d"
-  replicas: 3
-  port: 8000
+  replicas: 2
+  port: 5000
   resources:
     requests:
       memory: "100Mi"
@@ -23,14 +23,14 @@ frontend:
     limits:
       memory: "200Mi"
 
-mysql:
-  image: mysql
-  tag: "8.4"
+mongodb:
+  image: mongo
+  tag: "latest"
   replicas: 1
-  port: 3306
+  port: 27017
   storageSize: 1Gi
 
 config:
-  dbHost: mysql
-  dbPort: "3306"
-  dbName: tasks
+  dbHost: mongodb
+  dbPort: "27017"
+  dbName: BANK

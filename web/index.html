@@ -4,25 +4,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tasks</title>
+  <title>Bank</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
   <div class="container">
-    <h1>Tasks</h1>
-
+    <h1>Bank API</h1>
     <div id="info" class="info"></div>
 
-    <input type="text" id="search" placeholder="Search tasks..." maxlength="200" class="search-input">
+    <div class="tabs">
+      <button class="tab active" data-tab="register">Register</button>
+      <button class="tab" data-tab="balance">Balance</button>
+      <button class="tab" data-tab="add">Add Money</button>
+      <button class="tab" data-tab="transfer">Transfer</button>
+      <button class="tab" data-tab="loan">Loan</button>
+    </div>
 
-    <form id="task-form" class="task-form">
-      <input type="text" id="title" placeholder="Task name" required maxlength="200">
-      <textarea id="description" placeholder="Description (optional)" maxlength="1000"></textarea>
-      <button type="submit">Add Task</button>
-    </form>
+    <div id="register" class="panel active">
+      <input type="text" id="reg-user" placeholder="Username">
+      <input type="password" id="reg-pass" placeholder="Password">
+      <button onclick="register()">Register</button>
+    </div>
 
-    <div id="tasks"></div>
+    <div id="balance" class="panel">
+      <input type="text" id="bal-user" placeholder="Username">
+      <input type="password" id="bal-pass" placeholder="Password">
+      <button onclick="getBalance()">Check Balance</button>
+    </div>
+
+    <div id="add" class="panel">
+      <input type="text" id="add-user" placeholder="Username">
+      <input type="password" id="add-pass" placeholder="Password">
+      <input type="number" id="add-amount" placeholder="Amount" min="1">
+      <button onclick="addMoney()">Add</button>
+    </div>
+
+    <div id="transfer" class="panel">
+      <input type="text" id="tr-user" placeholder="Username">
+      <input type="password" id="tr-pass" placeholder="Password">
+      <input type="text" id="tr-to" placeholder="Send to">
+      <input type="number" id="tr-amount" placeholder="Amount" min="1">
+      <button onclick="transferMoney()">Transfer</button>
+    </div>
+
+    <div id="loan" class="panel">
+      <input type="text" id="loan-user" placeholder="Username">
+      <input type="password" id="loan-pass" placeholder="Password">
+      <input type="number" id="loan-amount" placeholder="Amount" min="1">
+      <button onclick="takeLoan()">Take Loan</button>
+      <button onclick="payLoan()">Pay Loan</button>
+    </div>
+
+    <div id="result" class="result"></div>
   </div>
 
   <script src="/app.js"></script>

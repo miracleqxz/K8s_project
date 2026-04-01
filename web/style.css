@@ -14,7 +14,7 @@ body {
 }
 
 .container {
-  max-width: 640px;
+  max-width: 480px;
   margin: 3rem auto;
   padding: 0 1rem;
 }
@@ -27,7 +27,6 @@ h1 {
 .info {
   display: flex;
   gap: 1rem;
-  flex-wrap: wrap;
   font-size: 0.8rem;
   color: #888;
   background: #eee;
@@ -36,25 +35,40 @@ h1 {
   margin-bottom: 1rem;
 }
 
-.search-input {
-  width: 100%;
-  padding: 0.6rem 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 0.95rem;
-  font-family: inherit;
+.tabs {
+  display: flex;
+  gap: 0.25rem;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
 }
 
-.task-form {
-  display: flex;
+.tab {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.tab.active {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+.panel {
+  display: none;
   flex-direction: column;
   gap: 0.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
-.task-form input,
-.task-form textarea {
+.panel.active {
+  display: flex;
+}
+
+.panel input {
   padding: 0.6rem 0.75rem;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -62,12 +76,7 @@ h1 {
   font-family: inherit;
 }
 
-.task-form textarea {
-  resize: vertical;
-  min-height: 60px;
-}
-
-.task-form button {
+.panel button {
   align-self: flex-start;
   padding: 0.55rem 1.25rem;
   background: #111;
@@ -78,73 +87,20 @@ h1 {
   cursor: pointer;
 }
 
-.task-form button:hover {
+.panel button:hover {
   background: #333;
 }
 
-.task-card {
+.result {
   background: #fff;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
-  padding: 1rem 1.25rem;
-  margin-bottom: 0.75rem;
-  display: flex;
-  gap: 0.75rem;
-  align-items: flex-start;
+  padding: 1rem;
+  min-height: 60px;
 }
 
-.task-card.done .task-title {
-  text-decoration: line-through;
-  opacity: 0.5;
-}
-
-.task-card input[type="checkbox"] {
-  margin-top: 0.25rem;
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-}
-
-.task-body {
-  flex: 1;
-  min-width: 0;
-}
-
-.task-title {
-  font-weight: 600;
-  font-size: 1rem;
-}
-
-.task-desc {
-  font-size: 0.875rem;
-  color: #555;
-  margin-top: 0.2rem;
+.result pre {
+  font-size: 0.9rem;
   white-space: pre-wrap;
   word-break: break-word;
-}
-
-.task-meta {
-  font-size: 0.75rem;
-  color: #999;
-  margin-top: 0.4rem;
-}
-
-.task-delete {
-  background: none;
-  border: none;
-  color: #bbb;
-  font-size: 1.2rem;
-  cursor: pointer;
-  padding: 0 0.25rem;
-  line-height: 1;
-}
-
-.task-delete:hover {
-  color: #e33;
-}
-
-.empty {
-  text-align: center;
-  color: #999;
-  padding: 2rem 0;
 }

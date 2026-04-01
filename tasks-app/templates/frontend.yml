@@ -31,19 +31,3 @@ spec:
         - name: nginx-config
           configMap:
             name: nginx-config
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend
-  namespace: {{ .Values.namespace }}
-spec:
-  selector:
-    app: frontend
-  ports:
-    - protocol: TCP
-      port: {{ .Values.frontend.port }}
-      targetPort: {{ .Values.frontend.port }}
-      nodePort: {{ .Values.frontend.nodePort }}
-  type: NodePort

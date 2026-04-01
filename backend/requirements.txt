@@ -1,8 +1,4 @@
-fastapi==0.115.6
-uvicorn==0.34.0
-pymysql==1.1.1
-cryptography==44.0.0
-prometheus-fastapi-instrumentator==7.0.2
-prometheus-client==0.21.1
-kafka-python-ng==2.2.3
-elasticsearch==8.17.0
+Flask
+flask_restful
+pymongo
+bcrypt
